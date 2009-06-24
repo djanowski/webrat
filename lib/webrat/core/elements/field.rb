@@ -90,7 +90,7 @@ module Webrat
       when :mechanize
         { name => value }
       else
-        { name => escaped_value }
+        { name => value }
       end
     end
 

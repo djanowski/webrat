@@ -40,15 +40,15 @@ class WebratRackTest < Test::Unit::TestCase
   #   assert response_body.include?('<form method="post" action="/go">')
   # end
   #
-  # def test_submits_form
-  #   visit "/go"
-  #   fill_in "Name", :with => "World"
-  #   fill_in "Email", :with => "world@example.org"
-  #   click_button "Submit"
-  #
-  #   assert response_body.include?("Hello, World")
-  #   assert response_body.include?("Your email is: world@example.org")
-  # end
+  def test_submits_form
+    visit "/go"
+    fill_in "Name", :with => "World"
+    fill_in "Email", :with => "world@example.org"
+    click_button "Submit"
+
+    assert response_body.include?("Hello, World")
+    assert response_body.include?("Your email is: world@example.org")
+  end
   #
   # def test_check_value_of_field
   #   visit "/"

@@ -13,4 +13,21 @@ class RackApp < Sinatra::Default
   get "/foo" do
     "spam"
   end
+
+  get "/go" do
+    return <<-EOS
+    <form action="/go" method="post">
+      <input type="text" name="Name" />
+      <input type="text" name="Email" />
+      <input type="submit" value="Submit" />
+    </form>
+    EOS
+  end
+
+  post "/go" do
+    return <<-EOS
+    Hello, #{params[:Name]}
+    Your email is: #{params[:Email]}
+    EOS
+  end
 end
