@@ -2,8 +2,9 @@ module Webrat
   module Matchers
 
     class HasContent #:nodoc:
-      def initialize(content)
+      def initialize(content, scope = nil)
         @content = content
+        @scope = scope
       end
 
       def matches?(stringlike)
@@ -12,6 +13,8 @@ module Webrat
         else
           @document = Webrat.hpricot_document(stringlike)
         end
+
+        @document = @document.at(@scope) if @scope
 
         @element = Webrat::XML.inner_text(@document)
 
@@ -50,22 +53,31 @@ module Webrat
     end
 
     # Matches the contents of an HTML document with
-    # whatever string is supplied
-    def contain(content)
-      HasContent.new(content)
+    # whatever string is supplied.
+    # You can pass a selector to scope your expectation
+    # to a specific element (defaults to the whole
+    # response body).
+    def contain(content, scope = nil)
+      HasContent.new(content, scope)
     end
 
     # Asserts that the body of the response contain
-    # the supplied string or regexp
-    def assert_contain(content)
-      hc = HasContent.new(content)
+    # the supplied string or regexp.
+    # You can pass a selector to scope your assertion
+    # to a specific element (defaults to the whole
+    # response body).
+    def assert_contain(content, scope = nil)
+      hc = HasContent.new(content, scope)
       assert hc.matches?(response_body), hc.failure_message
     end
 
     # Asserts that the body of the response
-    # does not contain the supplied string or regepx
-    def assert_not_contain(content)
-      hc = HasContent.new(content)
+    # does not contain the supplied string or regexp.
+    # You can pass a selector to scope your assertion
+    # to a specific element (defaults to the whole
+    # response body).
+    def assert_not_contain(content, scope = nil)
+      hc = HasContent.new(content, scope)
       assert !hc.matches?(response_body), hc.negative_failure_message
     end
 

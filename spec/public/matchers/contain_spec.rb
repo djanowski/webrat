@@ -18,14 +18,6 @@ describe "contain" do
     HTML
   end
 
-  before(:each) do
-    @body = <<-EOF
-      <div id='main'>
-        <div class='inner'>hello, world!</div>
-      </div>
-    EOF
-  end
-
   describe "#matches?" do
     it "should call element#contains? when the argument is a string" do
       @body.should contain("hello, world!")
@@ -49,6 +41,10 @@ describe "contain" do
         assert_contain("hello, world")
       end
 
+      it "should pass when containing the text inside a scope" do
+        assert_contain("world", ".inner")
+      end
+
       it "should pass when containing the regexp" do
         assert_contain(/hello, world/)
       end
@@ -56,6 +52,12 @@ describe "contain" do
       it "should throw an exception when the body doesnt contain the text" do
         lambda {
           assert_contain("monkeys")
+        }.should raise_error(Test::Unit::AssertionFailedError)
+      end
+
+      it "should throw an exception when the body doesnt contain the text inside a scope" do
+        lambda {
+          assert_contain("world", "h2")
         }.should raise_error(Test::Unit::AssertionFailedError)
       end
 
@@ -71,6 +73,10 @@ describe "contain" do
         assert_not_contain("monkeys")
       end
 
+      it "should not pass when not containing the text inside the scope" do
+        assert_not_contain("world", "h2")
+      end
+
       it "should pass when not containing the regexp" do
         assert_not_contain(/monkeys/)
       end
@@ -78,6 +84,12 @@ describe "contain" do
       it "should throw an exception when the body does contain the text" do
         lambda {
           assert_not_contain("hello, world")
+        }.should raise_error(Test::Unit::AssertionFailedError)
+      end
+
+      it "should throw an exception when the body does contain the text inside the scope" do
+        lambda {
+          assert_not_contain("world", ".inner")
         }.should raise_error(Test::Unit::AssertionFailedError)
       end
 
