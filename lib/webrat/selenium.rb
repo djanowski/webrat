@@ -1,13 +1,13 @@
 require "webrat"
-gem "selenium-client", ">=1.2.16"
-require "selenium/client"
+gem "selenium-rc"
+require "selenium/rc_server"
 require "webrat/selenium/silence_stream"
 require "webrat/selenium/selenium_session"
 require "webrat/selenium/matchers"
 require "webrat/core_extensions/tcp_socket"
 
 module Webrat
-  # To use Webrat's Selenium support, you'll need the selenium-client gem installed.
+  # To use Webrat's Selenium support, you'll need the selenium-rc gem installed.
   # Activate it with (for example, in your <tt>env.rb</tt>):
   #
   #   require "webrat"
