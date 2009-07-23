@@ -199,7 +199,7 @@ module Webrat
     end
 
     def setup #:nodoc:
-      Selenium::SeleniumRCServer.new(
+      SeleniumRC::Server.new(
         Webrat.configuration.selenium_server_address,
         Webrat.configuration.selenium_server_port,
         :timeout => Webrat.configuration.selenium_browser_startup_time
