@@ -1,7 +1,7 @@
 require "webrat"
 gem "selenium-rc"
 gem "selenium-client"
-require "selenium/rc_server"
+require "selenium_rc/server"
 require "selenium/client"
 require "webrat/selenium/silence_stream"
 require "webrat/selenium/selenium_session"
