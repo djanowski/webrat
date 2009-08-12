@@ -1,8 +1,19 @@
 require "webrat"
-gem "selenium-rc"
-gem "selenium-client"
-require "selenium_rc/server"
-require "selenium/client"
+
+begin
+  require "selenium_rc/server"
+rescue LoadError => e
+  e.message << " (You may need to install the selenium-rc gem)"
+  raise e
+end
+
+begin
+  require "selenium/client"
+rescue LoadError => e
+  e.message << " (You may need to install the selenium-client gem)"
+  raise e
+end
+
 require "webrat/selenium/silence_stream"
 require "webrat/selenium/selenium_session"
 require "webrat/selenium/matchers"
