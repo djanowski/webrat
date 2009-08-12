@@ -18,16 +18,21 @@ module Webrat
       RailsSession
     when :merb
       MerbSession
-    when :selenium
-      SeleniumSession
     when :rack
       RackSession
+    when :rack_test
+      warn("The :rack_test mode is deprecated. Please use :rack instead")
+      require "webrat/rack"
+      RackSession
+    when :sinatra
+      warn("The :sinatra mode is deprecated. Please use :rack instead")
+      SinatraSession
+    when :selenium
+      SeleniumSession
     when :sinatra
       SinatraSession
     when :mechanize
       MechanizeSession
-    when :rack_test
-      RackTestSession
     else
       raise WebratError.new(<<-STR)
 Unknown Webrat mode: #{Webrat.configuration.mode.inspect}
@@ -53,12 +58,16 @@ For example:
     attr_reader :current_url
     attr_reader :elements
 
-    def initialize(context = nil) #:nodoc:
+    def_delegators :@adapter, :response, :response_code, :response_body,
+      :response_body=, :response_code=,
+      :get, :post, :put, :delete
+
+    def initialize(adapter=nil)
       @http_method     = :get
       @data            = {}
       @default_headers = {}
       @custom_headers  = {}
-      @context         = context
+      @adapter         = adapter
 
       reset
     end

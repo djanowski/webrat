@@ -1,4 +1,14 @@
-== 0.4.5 / ?
+== 0.5.0 / 2009-08-12
+
+* Major enhancements
+
+  * Depreacate :rack_test and :sinatra in favor of :rack, which uses Rack::Test (Simon Rozet)
+
+* Minor enhancements
+
+  * Don't require rubygems at runtime (Simon Rozet)
+
+== 0.4.5 / 2009-08-10
 
 * Major enhancements
 

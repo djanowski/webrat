@@ -16,11 +16,11 @@ module Webrat
     end
 
     def webrat_session
-      if Webrat.configuration.mode == :rack_test
-        @_webrat_session ||= ::Webrat::RackTestSession.new(rack_test_session)
-      else
-        @_webrat_session ||= ::Webrat.session_class.new(self)
-      end
+      @_webrat_session ||= ::Webrat::Session.new(webrat_adapter)
+    end
+
+    def webrat_adapter
+      @_webrat_adapter ||= Webrat.session_class.new(self)
     end
 
     # all of these methods delegate to the @session, which should

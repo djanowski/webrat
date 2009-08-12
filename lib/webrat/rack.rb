@@ -1,24 +1,25 @@
-require 'webrat'
-
-class CGIMethods #:nodoc:
-  def self.parse_query_parameters(params)
-    hash = {}
-    params.split('&').each do |p|
-      pair = p.split('=')
-      hash[pair[0]] = pair[1]
-    end
-    hash
-  end
-end
+require "rack/test"
 
 module Webrat
-  class RackSession < Session #:nodoc:
+  class RackSession
+    extend Forwardable
+
+    def_delegators :@session, :get, :post, :put, :delete
+
+    def initialize(session) #:nodoc:
+      @session = session
+    end
+
     def response_body
-      @response.body
+      response.body
     end
 
     def response_code
-      @response.status
+      response.status
+    end
+
+    def response
+      @session.last_response
     end
   end
 end
